@@ -1,9 +1,7 @@
-function SingleHeading({
-  title,
-  index,
-  activeHeadingTab,
-  setActiveHeadingTab,
-}) {
+import { useGlobalContext } from "../contexts/GlobalContext";
+
+function SingleHeading({ title, index }) {
+  const { activeHeadingTab, handleHeadingTab } = useGlobalContext();
   return (
     <div
       className={`cursor-pointer text-sm font-medium hover:text-primary-800 lg:text-lg ${
@@ -11,7 +9,7 @@ function SingleHeading({
           ? "text-primary-600"
           : "text-gray-500 dark:text-tertiary"
       }`}
-      onClick={() => setActiveHeadingTab(index)}
+      onClick={() => handleHeadingTab(index)}
     >
       <p className="mb-2">{title}</p>
       <div

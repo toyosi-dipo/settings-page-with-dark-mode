@@ -2,17 +2,31 @@ import Header from "../components/Header";
 import Nav from "../components/Nav";
 import Link from "next/link";
 import { QuestionIcon, UserIcon } from "../assets/icons";
+import { useEffect } from "react";
+import { useGlobalContext } from "../contexts/GlobalContext";
+import SingleInput from "../components/SingleInput";
 
 function Home() {
-  function SingleInput({ value, type = "text" }) {
-    return (
-      <input
-        type={type}
-        className="dark-bg-2 w-full rounded-lg border border-gray-200 px-4 py-3 text-sm text-gray-600 dark:border-stroke-1 dark:text-secondary lg:text-base"
-        defaultValue={value}
-      />
-    );
-  }
+  const {
+    darkMode,
+    isProfileEdit,
+    setDarkMode,
+    setLightMode,
+    toggleEditProfile,
+  } = useGlobalContext();
+
+  // dark mode handler on page load
+  useEffect(() => {
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      setDarkMode();
+    } else {
+      setLightMode();
+    }
+  }, []);
 
   return (
     <div className="grid-cols-[auto_1fr] lg:grid">
@@ -43,31 +57,33 @@ function Home() {
                 {/* sub-heading flex container */}
                 <div className="mb-4 flex items-center justify-between">
                   <h3 className="text-base lg:text-xl">Profile details</h3>
-                  <button className="blue-txt">Edit</button>
+                  <button className="blue-txt" onClick={toggleEditProfile}>
+                    {isProfileEdit ? "Save" : "Edit"}
+                  </button>
                 </div>
                 {/* several grid containers */}
                 {/* container */}
                 <div className="mb-5 grid grid-cols-2 gap-5">
                   <div className="space-y-2">
                     <h4 className=" text-sm">First Name</h4>
-                    <SingleInput value="Cameron" />
+                    <SingleInput name="firstName" />
                   </div>
                   <div className="space-y-2">
                     <h4 className=" text-sm">Last Name</h4>
-                    <SingleInput value="Fisher" />
+                    <SingleInput name="lastName" />
                   </div>
                 </div>
 
                 {/* container */}
                 <div className="mb-5">
                   <h4 className=" text-sm">Residential Address</h4>
-                  <SingleInput value="1298 West Frontier Parkway, TX, USA" />
+                  <SingleInput name="address" />
                 </div>
 
                 {/* container */}
                 <div className="mb-5 lg:mb-7">
                   <h4 className=" text-sm">Email Address</h4>
-                  <SingleInput value="kenzi.lawson@example.com" type="email" />
+                  <SingleInput type="email" name="email" />
                 </div>
 
                 {/* horizontal line */}
@@ -83,9 +99,11 @@ function Home() {
                     >
                       <input
                         type="radio"
-                        defaultChecked
                         name="mode"
                         id="light-mode"
+                        checked={darkMode ? false : true}
+                        onClick={setLightMode}
+                        readOnly
                       />
                       Light mode
                     </label>
@@ -93,7 +111,14 @@ function Home() {
                       htmlFor="dark-mode"
                       className="flex items-center gap-1 text-gray-600 dark:text-secondary"
                     >
-                      <input type="radio" name="mode" id="dark-mode" />
+                      <input
+                        type="radio"
+                        name="mode"
+                        id="dark-mode"
+                        checked={darkMode ? true : false}
+                        onClick={setDarkMode}
+                        readOnly
+                      />
                       Dark mode
                     </label>
                     <label
@@ -146,7 +171,7 @@ function Home() {
 
             {/* grid item 2 - middle bar */}
             <div className="hidden self-stretch xl:block">
-              <div className="mt-32 h-9 w-2 rounded-full bg-gray-300 dark:bg-[#323232] "></div>
+              <div className="mt-32 h-9 w-2 rounded-full bg-gray-300 dark:bg-[#323232]"></div>
             </div>
 
             {/* grid item 3 */}

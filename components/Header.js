@@ -1,10 +1,7 @@
-import { useState } from "react";
 import { NotificationIcon, SearchIcon, VDotsIcon } from "../assets/icons";
 import SingleHeading from "../components/SingleHeading";
 
 function Header() {
-  const [activeHeadingTab, setActiveHeadingTab] = useState(1);
-
   return (
     <header className="dark-bdr dark-bg-2 border-b border-b-gray-200 bg-white ">
       <div className="max-w-[2500px]">
@@ -33,42 +30,12 @@ function Header() {
         </div>
         {/* sub headings */}
         <div className="flex items-center justify-between gap-3 overflow-x-auto  px-5 pt-4 lg:justify-start lg:gap-10 lg:px-15">
-          <SingleHeading
-            title="General"
-            index={1}
-            setActiveHeadingTab={setActiveHeadingTab}
-            activeHeadingTab={activeHeadingTab}
-          />
-          <SingleHeading
-            title="Profile"
-            index={2}
-            setActiveHeadingTab={setActiveHeadingTab}
-            activeHeadingTab={activeHeadingTab}
-          />
-          <SingleHeading
-            title="Security"
-            index={3}
-            setActiveHeadingTab={setActiveHeadingTab}
-            activeHeadingTab={activeHeadingTab}
-          />
-          <SingleHeading
-            title="Privacy"
-            index={4}
-            setActiveHeadingTab={setActiveHeadingTab}
-            activeHeadingTab={activeHeadingTab}
-          />
-          <SingleHeading
-            title="Email"
-            index={5}
-            setActiveHeadingTab={setActiveHeadingTab}
-            activeHeadingTab={activeHeadingTab}
-          />
-          <SingleHeading
-            title="Billing"
-            index={6}
-            setActiveHeadingTab={setActiveHeadingTab}
-            activeHeadingTab={activeHeadingTab}
-          />
+          <SingleHeading title="General" index={1} />
+          <SingleHeading title="Profile" index={2} />
+          <SingleHeading title="Security" index={3} />
+          <SingleHeading title="Privacy" index={4} />
+          <SingleHeading title="Email" index={5} />
+          <SingleHeading title="Billing" index={6} />
         </div>
       </div>
     </header>
